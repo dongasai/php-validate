@@ -427,7 +427,7 @@ $v->validate();
  'default' => 'mixed',
  'on' => 'string|array'
  'isEmpty' => 'callback(string|closure)',
- 'when' => 'callback(string|closure)',
+ 'when' => 'callable',
  'filter' => 'callback(string|array|closure)'
 ]
 ```

@@ -266,7 +266,7 @@ trait ValidationTrait
 
         // Preconditions for verification -- If do not meet the conditions, skip this rule
         $when = $rule['when'] ?? null;
-        if ($when && ($when instanceof Closure) && $when($this->data, $this) !== true) {
+        if ($when && (is_callable($when)) && call_user_func_array($when,[$this->data, $this]) !== true) {
             return;
         }
 
