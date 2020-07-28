@@ -416,23 +416,30 @@ trait ValidationTrait
         // if $validator is a closure OR a object has method '__invoke'
         if (is_object($validator) && method_exists($validator, '__invoke')) {
             $args[] = $this->data;
+            $args[] = $this;
             $passed = $validator($value, ...$args);
         } elseif (is_string($validator)) {
             $realName = Validators::realName($validator);
             // is global user validator
             if ($callback = $this->getValidator($validator)) {
                 $args[] = $this->data;
+                $args[] = $this;
                 $passed = $callback($value, ...$args);
             // if $validator is a custom method of the subclass.
-            } elseif (method_exists($this, $method = $validator . 'Validator')) {
+            } elseif ($validator === 'required') {
+                $passed = $this->required($field, $value);
+            }elseif (method_exists($this, $method = $validator . 'Validator')) {
                 $passed = $this->$method($value, ...$args);
             // if $validator is a global custom validator {@see UserValidators::$validators}.
             } elseif ($callback = UserValidators::get($validator)) {
                 $args[] = $this->data;
+                $args[] = $this;
                 $passed = $callback($value, ...$args);
             } elseif (method_exists(Validators::class, $realName)) {
                 $passed = Validators::$realName($value, ...$args);
             } elseif (function_exists($validator)) { // it is function name
+                $args[] = $this->data;
+                $args[] = $this;
                 $passed = $validator($value, ...$args);
             } else {
                 throw new InvalidArgumentException("The validator [$validator] don't exists!");

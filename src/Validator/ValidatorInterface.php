@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Inhere\Validate\Validator;
 
@@ -7,6 +9,7 @@ namespace Inhere\Validate\Validator;
  */
 interface ValidatorInterface
 {
+
     /**
      * Verification method, verify and return bool type
      *
@@ -15,5 +18,5 @@ interface ValidatorInterface
      *
      * @return bool
      */
-    public function validate($value, $data): bool;
+    public function validate($value, $data, \Inhere\Validate\AbstractValidation $validation): bool;
 }

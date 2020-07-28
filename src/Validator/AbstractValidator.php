@@ -12,8 +12,8 @@ abstract class AbstractValidator implements ValidatorInterface
      *
      * @return bool
      */
-    public function __invoke($value, $data): bool
+    public function __invoke($value, $data , \Inhere\Validate\AbstractValidation $validation): bool
     {
-        return (bool)$this->validate($value, $data);
+        return (bool)$this->validate($value, $data,$validation);
     }
 }
