@@ -1091,7 +1091,6 @@ class Validators
             // $dict = array_map('trim', explode(',', $dict));
             return false !== ($strict ? strpos($dict, (string)$val) : stripos($dict, (string)$val));
         }
-
         return in_array($val, (array)$dict, $strict);
     }
 

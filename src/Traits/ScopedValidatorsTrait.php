@@ -615,30 +615,8 @@ trait ScopedValidatorsTrait
         }
 
         foreach ($values as $value) {
-            $passed = false;
 
-            if (is_object($validator) && method_exists($validator, '__invoke')) {
-                $passed = $validator($value, ...$args);
-            } elseif (is_string($validator)) {
-                // special for required
-                if ('required' === $validator) {
-                    $passed = !Validators::isEmpty($value);
-                } elseif (isset($this->_validators[$validator])) {
-                    $callback = $this->_validators[$validator];
-                    $passed   = $callback($value, ...$args);
-                } elseif (method_exists($this, $method = $validator . 'Validator')) {
-                    $passed = $this->$method($value, ...$args);
-                } elseif (method_exists(Validators::class, $validator)) {
-                    $passed = Validators::$validator($value, ...$args);
-
-                // it is function name
-                } elseif (function_exists($validator)) {
-                    $passed = $validator($value, ...$args);
-                } else {
-                    throw new InvalidArgumentException("The validator [$validator] don't exists!");
-                }
-            }
-
+            $passed = $this->applyValidator('',$value,$args,$validator);
             if (!$passed) {
                 return false;
             }
