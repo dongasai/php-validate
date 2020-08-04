@@ -256,6 +256,27 @@ trait ScopedValidatorsTrait
     }
 
     /**
+     * 如果指定的其他字段中的 任意一个 有值且不为空，则此字段为 必不填
+     *
+     * @param string       $field
+     * @param mixed        $fieldVal
+     * @param array|string $fields
+     *
+     * @return bool|null
+     * @see requiredIf()
+     */
+    public function requiredNotWith(string $field, $fieldVal, $fields): ?bool
+    {
+        foreach ((array)$fields as $name) {
+            if ($this->required($name)) {
+                return Validators::isEmpty($fieldVal);
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * 如果指定的 所有字段 都有值且不为空，则此字段为 必填(refer laravel)
      *
      * @param string       $field

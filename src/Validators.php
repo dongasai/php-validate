@@ -365,6 +365,7 @@ class Validators
         return false !== stripos(Helper::IS_TRUE, '|' . $val . '|');
     }
 
+
     /**
      * 验证字段值是否仅包含字母字符
      *

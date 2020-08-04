@@ -255,6 +255,7 @@ trait ValidationTrait
      */
     protected function applyRule($fields, array $rule, array $onlyChecked, bool $stopOnError): void
     {
+
         $fields    = is_string($fields) ? Filters::explode($fields) : (array)$fields;
         $validator = array_shift($rule);
 
